@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Compound Profit Calculator</title>
+<title>Trading Tools - Compound & Grid Trailing EA</title>
 <link href="https://fonts.googleapis.com/css2?family=Space+Mono:wght@400;700&family=Syne:wght@400;600;700;800&display=swap" rel="stylesheet">
 <style>
   :root {
@@ -558,13 +558,14 @@
       <div class="logo-dot"></div>
       <span class="logo-text">Trading Tools</span>
     </div>
-    <h1>Compound<br><span>Profit</span> Calc</h1>
-    <p class="subtitle">Simulasi pertumbuhan modal dengan strategi compound</p>
+    <h1>Trading<br><span>Tools</span> Pro</h1>
+    <p class="subtitle">Compound Calculator • Analisa RR • Grid Trailing EA</p>
   </header>
 
   <div class="tabs">
     <button class="tab-btn active" onclick="switchTab('compound')">📈 Compound</button>
     <button class="tab-btn" onclick="switchTab('analisa')">📊 Analisa RR</button>
+    <button class="tab-btn" onclick="switchTab('gridea')">🤖 Grid EA</button>
   </div>
 
   <!-- COMPOUND TAB -->
@@ -739,6 +740,174 @@
     </div>
   </div>
 
+  <!-- GRID EA TAB -->
+  <div id="gridea-content" style="display:none">
+    
+    <div class="card">
+      <div class="card-title">🤖 Grid Trailing Stop EA - MT5</div>
+      <div style="text-align:center; margin-bottom:16px;">
+        <div style="display:inline-flex; align-items:center; gap:6px; background:rgba(0,229,255,0.08); border:1px solid rgba(0,229,255,0.2); border-radius:8px; padding:6px 14px;">
+          <span style="color:var(--cyan); font-size:12px; font-weight:700; letter-spacing:1px;">v2.0 • MQL5 • MT5</span>
+        </div>
+      </div>
+      <p style="color:var(--muted); font-size:13px; line-height:1.7; text-align:center;">
+        EA Grid Trading dengan <strong style="color:var(--green)">Virtual Trailing Stop</strong> — trailing dihitung secara lokal di VPS, 
+        <strong style="color:var(--gold)">TIDAK dikirim ke server broker</strong>. Menghindari error "Max Quotes" dan "Too Many Requests".
+      </p>
+    </div>
+
+    <div class="info-box" style="border-color:rgba(0,255,140,0.2); background:rgba(0,255,140,0.04);">
+      <h3 style="color:var(--green);">⚡ Kenapa Virtual Trailing?</h3>
+      <p>Masalah umum pada EA grid:</p>
+      <ul style="color:var(--muted); font-size:13px; line-height:2; padding-left:16px; margin-top:8px;">
+        <li>Trailing pending order + trailing stoploss = <strong style="color:#ff6b6b;">banyak request ke broker</strong></li>
+        <li>Setiap perubahan trailing dihitung 1 quote oleh broker</li>
+        <li>Broker limit quotes → EA error <strong style="color:#ff6b6b;">"Max Quotes Exceeded"</strong></li>
+      </ul>
+      <div class="formula" style="margin-top:12px;">Solusi: Virtual Trailing = Dihitung lokal, CLOSE saja yg dikirim ke broker</div>
+    </div>
+
+    <div class="info-box">
+      <h3>📋 Fitur Utama</h3>
+      <ul style="color:var(--muted); font-size:13px; line-height:2.2; padding-left:16px;">
+        <li><strong style="color:var(--text)">Grid Order</strong> — Buy Stop / Sell Stop / Both direction</li>
+        <li><strong style="color:var(--text)">Virtual Trailing Stop</strong> — Tidak kirim modify ke broker</li>
+        <li><strong style="color:var(--text)">Pending Order Trailing</strong> — Dengan throttle 5 detik</li>
+        <li><strong style="color:var(--text)">Lot Multiplier</strong> — Fixed atau martingale per level</li>
+        <li><strong style="color:var(--text)">Auto Close All</strong> — Profit target / max drawdown</li>
+        <li><strong style="color:var(--text)">Panel Info</strong> — Realtime status di chart</li>
+        <li><strong style="color:var(--text)">Grid Lines</strong> — Visual level di chart</li>
+        <li><strong style="color:var(--text)">Time Filter</strong> — Jam trading aktif</li>
+      </ul>
+    </div>
+
+    <div class="card">
+      <div class="card-title">⚙ Parameter Settings</div>
+      
+      <div style="margin-bottom:16px;">
+        <div style="font-size:11px; font-weight:700; color:var(--cyan); letter-spacing:1.5px; text-transform:uppercase; margin-bottom:10px;">Grid Settings</div>
+        <table style="width:100%; font-size:12px; border-collapse:collapse;">
+          <tr style="border-bottom:1px solid var(--border);">
+            <td style="padding:8px 0; color:var(--muted);">GridDirection</td>
+            <td style="padding:8px 0; color:var(--text); text-align:right;">Buy / Sell / Both</td>
+          </tr>
+          <tr style="border-bottom:1px solid var(--border);">
+            <td style="padding:8px 0; color:var(--muted);">GridLevels</td>
+            <td style="padding:8px 0; color:var(--text); text-align:right;">5 level (adjustable)</td>
+          </tr>
+          <tr style="border-bottom:1px solid var(--border);">
+            <td style="padding:8px 0; color:var(--muted);">GridDistance</td>
+            <td style="padding:8px 0; color:var(--text); text-align:right;">50 points</td>
+          </tr>
+          <tr style="border-bottom:1px solid var(--border);">
+            <td style="padding:8px 0; color:var(--muted);">LotSize</td>
+            <td style="padding:8px 0; color:var(--text); text-align:right;">0.01</td>
+          </tr>
+          <tr>
+            <td style="padding:8px 0; color:var(--muted);">LotMultiplier</td>
+            <td style="padding:8px 0; color:var(--text); text-align:right;">1.0 (fixed)</td>
+          </tr>
+        </table>
+      </div>
+
+      <div style="margin-bottom:16px;">
+        <div style="font-size:11px; font-weight:700; color:var(--cyan); letter-spacing:1.5px; text-transform:uppercase; margin-bottom:10px;">Virtual Trailing</div>
+        <table style="width:100%; font-size:12px; border-collapse:collapse;">
+          <tr style="border-bottom:1px solid var(--border);">
+            <td style="padding:8px 0; color:var(--muted);">TrailMode</td>
+            <td style="padding:8px 0; color:var(--green); text-align:right; font-weight:700;">VIRTUAL (default)</td>
+          </tr>
+          <tr style="border-bottom:1px solid var(--border);">
+            <td style="padding:8px 0; color:var(--muted);">TrailStart</td>
+            <td style="padding:8px 0; color:var(--text); text-align:right;">30 points profit</td>
+          </tr>
+          <tr style="border-bottom:1px solid var(--border);">
+            <td style="padding:8px 0; color:var(--muted);">TrailStep</td>
+            <td style="padding:8px 0; color:var(--text); text-align:right;">10 points</td>
+          </tr>
+          <tr>
+            <td style="padding:8px 0; color:var(--muted);">TrailDistance</td>
+            <td style="padding:8px 0; color:var(--text); text-align:right;">20 points dari harga</td>
+          </tr>
+        </table>
+      </div>
+
+      <div>
+        <div style="font-size:11px; font-weight:700; color:var(--cyan); letter-spacing:1.5px; text-transform:uppercase; margin-bottom:10px;">Risk Management</div>
+        <table style="width:100%; font-size:12px; border-collapse:collapse;">
+          <tr style="border-bottom:1px solid var(--border);">
+            <td style="padding:8px 0; color:var(--muted);">MaxDrawdown</td>
+            <td style="padding:8px 0; color:#ff6b6b; text-align:right;">30%</td>
+          </tr>
+          <tr style="border-bottom:1px solid var(--border);">
+            <td style="padding:8px 0; color:var(--muted);">TotalProfitUSD</td>
+            <td style="padding:8px 0; color:var(--green); text-align:right;">$10 (close all)</td>
+          </tr>
+          <tr style="border-bottom:1px solid var(--border);">
+            <td style="padding:8px 0; color:var(--muted);">TotalLossUSD</td>
+            <td style="padding:8px 0; color:#ff6b6b; text-align:right;">-$50 (close all)</td>
+          </tr>
+          <tr>
+            <td style="padding:8px 0; color:var(--muted);">MaxOrders</td>
+            <td style="padding:8px 0; color:var(--text); text-align:right;">10 orders</td>
+          </tr>
+        </table>
+      </div>
+    </div>
+
+    <div class="info-box" style="border-color:rgba(255,209,102,0.2); background:rgba(255,209,102,0.04);">
+      <h3 style="color:var(--gold);">🔄 Cara Kerja Virtual Trailing</h3>
+      <ol style="color:var(--muted); font-size:13px; line-height:2.2; padding-left:16px; margin-top:8px;">
+        <li>Grid order ditempatkan (Buy Stop / Sell Stop)</li>
+        <li>Ketika order tereksekusi → posisi terbuka</li>
+        <li>EA track profit secara lokal (tanpa modify)</li>
+        <li>Profit ≥ TrailStart → Virtual SL aktif</li>
+        <li>Harga naik → Virtual SL ikut naik (lokal)</li>
+        <li>Harga turun sentuh Virtual SL → <strong style="color:var(--green)">CLOSE posisi</strong></li>
+      </ol>
+      <div class="formula" style="margin-top:12px;">
+        Request ke broker: HANYA open + close<br>
+        TIDAK ADA OrderModify untuk trailing!
+      </div>
+    </div>
+
+    <div class="card">
+      <div class="card-title">📥 Cara Install</div>
+      <ol style="color:var(--muted); font-size:13px; line-height:2.4; padding-left:16px;">
+        <li>Download file <strong style="color:var(--text)">GridTrailingStop.mq5</strong></li>
+        <li>Buka MT5 → File → Open Data Folder</li>
+        <li>Masuk ke folder <code style="background:var(--surface); padding:2px 6px; border-radius:4px; color:var(--green); font-family:'Space Mono',monospace; font-size:11px;">MQL5/Experts/</code></li>
+        <li>Copy paste file .mq5 ke folder tersebut</li>
+        <li>Kembali ke MT5 → Navigator → Expert Advisors</li>
+        <li>Compile (F7) lalu drag ke chart</li>
+        <li>Set parameter sesuai kebutuhan</li>
+        <li>Pastikan <strong style="color:var(--green)">Allow Algo Trading</strong> aktif</li>
+      </ol>
+    </div>
+
+    <div class="info-box" style="border-color:rgba(255,107,107,0.2); background:rgba(255,107,107,0.04);">
+      <h3 style="color:#ff6b6b;">⚠ Rekomendasi</h3>
+      <ul style="color:var(--muted); font-size:13px; line-height:2; padding-left:16px; margin-top:8px;">
+        <li>Gunakan di <strong style="color:var(--text)">VPS</strong> untuk latensi rendah</li>
+        <li>Pair: <strong style="color:var(--gold)">XAUUSD, EURUSD, GBPUSD</strong></li>
+        <li>Timeframe: <strong style="color:var(--text)">M1 - M5</strong> (grid scalping)</li>
+        <li>Backtest dulu di Strategy Tester sebelum live</li>
+        <li>Mulai dengan lot kecil (0.01) di akun cent/demo</li>
+        <li>Set MaxDrawdown sesuai toleransi risiko</li>
+      </ul>
+    </div>
+
+    <div class="card" style="text-align:center; padding:20px;">
+      <div style="font-size:11px; color:var(--muted); letter-spacing:1px; text-transform:uppercase; margin-bottom:12px;">File EA</div>
+      <div style="font-family:'Space Mono',monospace; font-size:14px; color:var(--green); font-weight:700; margin-bottom:8px;">GridTrailingStop.mq5</div>
+      <div style="font-size:12px; color:var(--muted);">MetaTrader 5 Expert Advisor</div>
+      <div style="margin-top:14px; padding:10px; background:var(--surface); border-radius:10px; font-size:11px; color:var(--muted);">
+        Magic Number: 777777 | Version: 2.0
+      </div>
+    </div>
+
+  </div><!-- end gridea-content -->
+
 </div><!-- end wrapper -->
 
 <script>
@@ -755,9 +924,14 @@ function syncInput(id, val) {
 
 // Tab switcher
 function switchTab(tab) {
-  document.querySelectorAll('.tab-btn').forEach((b,i) => b.classList.toggle('active', (tab==='compound'&&i===0)||(tab==='analisa'&&i===1)));
+  document.querySelectorAll('.tab-btn').forEach((b,i) => {
+    b.classList.toggle('active', 
+      (tab==='compound'&&i===0) || (tab==='analisa'&&i===1) || (tab==='gridea'&&i===2)
+    );
+  });
   document.getElementById('compound-content').style.display = tab === 'compound' ? 'block' : 'none';
   document.getElementById('analisa-content').style.display = tab === 'analisa' ? 'block' : 'none';
+  document.getElementById('gridea-content').style.display = tab === 'gridea' ? 'block' : 'none';
 }
 
 // Format currency
